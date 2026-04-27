@@ -1,70 +1,43 @@
-## 1. Project Introduction
+# RISC-V 汇编指令级优化器 (基于 LLVM 架构)
 
-Welcome to the LLVM project in the openEuler community! This warehouse is the downstream warehouse of [llvm-project](https://github.com/llvm/llvm-project).
+llvm中的编译优化已经能将高级语言高效转化为二进制代码，然而若面对的是一个未经优化的汇编代码则无法进入llvm中编译优化的流程，生成高效的二进制代码。本项目是一个专门针对 **RISC-V (RV32I)** 基础指令集的后端优化工具。它***接收未优化的汇编代码***，修改llvm的汇编器部分，在汇编层面执行多轮优化，旨在减少指令冗余、平衡流水线负载并提升代码密度。
 
-This repository contains the source code for LLVM, a toolkit for the construction of highly optimized compilers, optimizers, and run-time environments.
+---
 
-The LLVM project has multiple components. The core of the project is itself called "LLVM". This contains all of the tools, libraries, and header files needed to process intermediate representations and convert them into object files. Tools include an assembler, disassembler, bitcode analyzer, and bitcode optimizer.
+## 🛠 项目架构
 
-C-like languages use the [Clang](https://clang.llvm.org/) frontend. This component compiles C, C++, Objective-C, and Objective-C++ code into LLVM bitcode -- and from there into object files, using LLVM.
+本项目模拟了现代编译器的后端流程，将汇编指令抽象为内部中间表示 (Internal Representation)，并执行以下 Pipeline：
 
-Other components include: the [libc++ C++ standard library](https://libcxx.llvm.org/), the [LLD linker](https://lld.llvm.org/), and more.
+1.  **解析器 (Parser)**：将 `.s` 文件转化为指令链表与基本块 (Basic Blocks)。
+2.  **CFG 构建**：建立控制流图，识别循环与分支跳转。
+3.  **分析**：执行活跃变量分析等数据流分析。
+4.  **转换**：执行 DCE、指令调度等实际修改操作。
 
-## 2. Construction Guide
+---
 
-You can use `git` to download the source code, and then use the `build.sh` script to build the LLVM in one-click mode. There are two build modes: `build with command line` and `build with container`.
+## 🚀 核心优化特性
 
-### 2.1. Build with command line directly
+### 1. 常量传播 (Liveness Analysis)
+基于 Dataflow Analysis 框架实现的前向分析。通过计算每个程序点的常量值格（Lattice），精确推断变量在特定路径上是否为常量。
+* **算法**：迭代定点算法 ，结合交运算合并不同路径的常量信息
+* **用途**：计算每个寄存器当下当下是否为一个常量，进行判断表达式的计算。
 
-You are advised to use the `openEuler` for building. If you use other operating systems, you are advised to use the containerized building mode.
+### 2. 活跃变量分析 (Liveness Analysis)
+基于 Dataflow Analysis 框架实现的逆向分析。通过计算每个点的 `LiveIn` 和 `LiveOut` 集合，精确掌握寄存器的生命周期。
+* **算法**：迭代定点算法 (Fixed-point Iteration)。
+* **用途**：死代码消除的基石。
 
-Ensure that the dependency software packages are installed. You can run the following command to install the software packages:
+### 3. 死代码消除 (Dead Code Elimination, DCE)
+自动识别并移除无效操作：
+* 基于常量传播与活跃变量分析的结果，移除定义了寄存器但后续未被读取的指令，以及删除不会对程序造成影响的函数。
+* 安全识别：确保被移除的指令不含 Side-effects（如内存写入或系统调用）。
+* *效果*：减少函数中未使用到的变量，未跳转到的基本块以及删除不会对程序造成影响的函数等等。
 
-` ` `
-yum install -y gcc g++ make cmake openssl-devel python3 \
-python3-setuptools python-wheel texinfo binutils-devel libatomic
-` ` `
+### 4. 指令调度 (Instruction Scheduling)
+针对 RISC-V 典型的五级流水线（或高性能发射架构）进行重排。
+* **启发式搜索**：采用 List Scheduling 算法。
+* **目标**：拉开 Load 指令与其使用指令 (Load-to-Use) 之间的距离，减少流水线气泡 (Stalls)。
+* **依赖保护**：严格遵守 RAW, WAW, WAR 数据依赖。
 
-You can run the `./build.sh -h` command to view the build options supported by the current project. Run the following command to perform a one-click build:
-
-` ` `
-./build.sh -r -b release -X X86 -j 8
-` ` `
-
-### 2.2 Build with container
-
-The openEuler LLVM project provides a containerized building mode to solve the problems of build failures and binary differences of build products caused by development environment differences. Thanks to the [openEuler container image project](https://gitee.com/openeuler/openeuler-docker-images), the [llvm-build-deps container image](https://gitee.com/openeuler/openeuler-docker-images/tree/master/llvm-build-deps) is created in advance. Developers can enable containerized builds using the `-C` option of the `build.sh` script. For example:
-
-` ` `
-./build.sh -C -r -b release -X X86 -j 8 // added -C option
-` ` `
-
-Dependency:
-* The Docker application must be correctly installed in the development environment.
-* The user is added to the docker user group so that the `sudo` command is not required when the `build.sh` script executes the docker command. You can run the following command to add the current user to the docker user group:
-
-` ` `
-sudo usermod -aG docker ${USER}
-` ` `
-
-Note: When you perform a containerized build for the first time, the script automatically pulls the `llvm-build-deps container image` from the image repository.
-
-## 3. Contribution guidance
-
-1. Fork This Warehouse
-2. Create the Feat_xxx branch.
-3. Submit the code.
-4. Create a Pull Request.
-
-## 4. Discussion and help-seeking
-
-### 4.1 Upstream Community
-* Join the [Discourse Forum](https://discourse.llvm.org/) .
-
-* [Code of Conduct](https://llvm.org/docs/CodeOfConduct.html) for Community Participants.
-
-### 4.1. Compiler SIG of the openEuler community
-There are several ways:
-* Subscribe to the [Compiler SIG mailing list](https://mailweb.openeuler.org/postorius/lists/compiler@openeuler.org/)
-* Post a discussion at the [openEuler forum](https://forum.openeuler.org/?locale=zh_CN).
-* WeChat communication group: Please add the WeChat name `Compiler_Assistant` first.
+## 例子
+![截图](/home/lyc/Pictures/截图/截图 2026-04-27 15-49-39.png)
