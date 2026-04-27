@@ -1,0 +1,249 @@
+//===--- BuiltinsSw64.def - Sw64 Builtin function database ----*- C++ -*-===//
+//
+//                     The LLVM Compiler Infrastructure
+//
+// This file is distributed under the University of Illinois Open Source
+// License. See LICENSE.TXT for details.
+//
+//===----------------------------------------------------------------------===//
+//
+// This file defines the Sw64-specific builtin function database.  Users of
+// this file must define the BUILTIN macro to make use of this information.
+//
+//===----------------------------------------------------------------------===//
+
+// The format of this database matches clang/Basic/Builtins.def.
+
+BUILTIN(__builtin_bitrev, "UiUi", "nc")
+BUILTIN(__builtin_getid, "Si", "nc")
+BUILTIN(__builtin_getps, "UiUi", "n")
+BUILTIN(__builtin_setps, "vUiUi", "n")
+
+BUILTIN(__builtin_sw64_crc32b, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32h, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32w, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32l, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32cb, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32ch, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32cw, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_crc32cl, "LiLiLi", "n")
+
+BUILTIN(__builtin_sw64_sbt, "LiLiLi", "n")
+BUILTIN(__builtin_sw64_cbt, "LiLiLi", "n")
+
+BUILTIN(__builtin_sw_vaddw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vsubw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucaddw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucsubw, "V8iV8iV8i", "n")
+
+BUILTIN(__builtin_sw_vaddl, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_vsubl, "V4LiV4LiV4Li", "n")
+
+BUILTIN(__builtin_sw_vucaddh, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucsubh, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucaddb, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucsubb, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vucaddhi, "V8iV8iLi", "n")
+BUILTIN(__builtin_sw_vucsubhi, "V8iV8iLi", "n")
+BUILTIN(__builtin_sw_vucaddbi, "V8iV8iLi", "n")
+BUILTIN(__builtin_sw_vucsubbi, "V8iV8iLi", "n")
+
+BUILTIN(__builtin_sw_vucaddh_v16hi, "V16sV16sV16s", "n")
+BUILTIN(__builtin_sw_vucsubh_v16hi, "V16sV16sV16s", "n")
+BUILTIN(__builtin_sw_vucaddb_v32qi, "V32cV32cV32c", "n")
+BUILTIN(__builtin_sw_vucsubb_v32qi, "V32cV32cV32c", "n")
+
+BUILTIN(__builtin_sw_vsumw, "LiV8i", "n")
+BUILTIN(__builtin_sw_vsuml, "LiV4Li", "n")
+BUILTIN(__builtin_sw_ctpopow, "LiV8i", "n")
+BUILTIN(__builtin_sw_ctlzow, "LiV8i", "n")
+
+BUILTIN(__builtin_sw_vsll, "v.", "t")
+BUILTIN(__builtin_sw_vsrl, "v.", "t")
+BUILTIN(__builtin_sw_vsra, "v.", "t")
+BUILTIN(__builtin_sw_vrol, "v.", "t")
+
+BUILTIN(__builtin_sw_vsllw, "V8iV8iLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrlw, "V8iV8iLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsraw, "V8iV8iLi", "ncV:256:")
+BUILTIN(__builtin_sw_vrolw, "V8iV8iLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_vsllb, "V32cV32cLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrlb, "V32cV32cLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrab, "V32cV32cLi", "ncV:256:")
+BUILTIN(__builtin_sw_vrolb, "V32cV32cLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_vslll, "V4LiV4LiLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrll, "V4LiV4LiLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsral, "V4LiV4LiLi", "ncV:256:")
+BUILTIN(__builtin_sw_vroll, "V4LiV4LiLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_vsllh, "V16sV16sLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrlh, "V16sV16sLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrah, "V16sV16sLi", "ncV:256:")
+BUILTIN(__builtin_sw_vrolh, "V16sV16sLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_sllow, "V4LiV4LiLi", "ncV:256:")
+BUILTIN(__builtin_sw_srlow, "V4LiV4LiLi", "ncV:256:")
+BUILTIN(__builtin_sw_sraow, "V4LiV4LiLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_vslls, "V4fV4fLi", "ncV:256:")
+BUILTIN(__builtin_sw_vslld, "V4dV4dLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrls, "V4fV4fLi", "ncV:256:")
+BUILTIN(__builtin_sw_vsrld, "V4dV4dLi", "ncV:256:")
+
+BUILTIN(__builtin_sw_vcmpgew, "LiV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmpeqw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmplew, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmpltw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmpulew, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmpultw, "V8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vcmpueqb, "V32cV32cV32c", "n")
+BUILTIN(__builtin_sw_vcmpugtb, "V32cV32cV32c", "n")
+
+BUILTIN(__builtin_sw_vmaxb, "V32cV32cV32c", "n")
+BUILTIN(__builtin_sw_vmaxh, "V16sV16sV16s", "n")
+BUILTIN(__builtin_sw_vmaxw, "V8iV8iV8i",    "n")
+BUILTIN(__builtin_sw_vmaxl, "V4LiV4LiV4Li", "n")
+
+BUILTIN(__builtin_sw_vumaxb, "V32cV32cV32c", "n")
+BUILTIN(__builtin_sw_vumaxh, "V16sV16sV16s", "n")
+BUILTIN(__builtin_sw_vumaxw, "V8iV8iV8i",    "n")
+BUILTIN(__builtin_sw_vumaxl, "V4LiV4LiV4Li", "n")
+
+BUILTIN(__builtin_sw_vminb, "V32cV32cV32c",  "n")
+BUILTIN(__builtin_sw_vminh, "V16sV16sV16s",  "n")
+BUILTIN(__builtin_sw_vminw, "V8iV8iV8i",     "n")
+BUILTIN(__builtin_sw_vminl, "V4LiV4LiV4Li",  "n")
+
+BUILTIN(__builtin_sw_vuminb, "V32cV32cV32c", "n")
+BUILTIN(__builtin_sw_vuminh, "V16sV16sV16s", "n")
+BUILTIN(__builtin_sw_vuminw, "V8iV8iV8i",    "n")
+BUILTIN(__builtin_sw_vuminl, "V4LiV4LiV4Li", "n")
+
+BUILTIN(__builtin_sw_vseleqw,  "V8iV8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vsellew,  "V8iV8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vselltw,  "V8iV8iV8iV8i", "n")
+BUILTIN(__builtin_sw_vsellbcw, "V8iV8iV8iV8i", "n")
+
+BUILTIN(__builtin_sw_vseleqwi,  "V8iV8iV8iLi", "n")
+BUILTIN(__builtin_sw_vsellewi,  "V8iV8iV8iLi", "n")
+BUILTIN(__builtin_sw_vselltwi,  "V8iV8iV8iLi", "n")
+BUILTIN(__builtin_sw_vsellbcwi, "V8iV8iV8iLi", "n")
+
+BUILTIN(__builtin_sw_vxor, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_vnot, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_vorr, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_vbic, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_vornot, "V4LiV4LiV4Li", "n")
+BUILTIN(__builtin_sw_veqv, "V4LiV4LiV4Li", "n")
+
+BUILTIN(__builtin_sw_vsqrts, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vsqrtd, "V4dV4d", "n")
+
+BUILTIN(__builtin_sw_vsums, "fV4f", "n")
+BUILTIN(__builtin_sw_vsumd, "dV4d", "n")
+
+BUILTIN(__builtin_sw_vfrecs, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vfrecd, "V4dV4d", "n")
+
+BUILTIN(__builtin_sw_vfcmpeqs, "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vfcmplts, "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vfcmples, "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vfcmpuns, "V4fV4fV4f", "n")
+
+BUILTIN(__builtin_sw_vfcmpeqd, "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vfcmpltd, "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vfcmpled, "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vfcmpund, "V4dV4dV4d", "n")
+
+BUILTIN(__builtin_sw_vfcvtsd, "V4dV4f", "n")
+BUILTIN(__builtin_sw_vfcvtds, "V4fV4d", "n")
+BUILTIN(__builtin_sw_vfcvtld, "V4dV4Li", "n")
+BUILTIN(__builtin_sw_vfcvtls, "V4fV4Li", "n")
+BUILTIN(__builtin_sw_vfcvtsh, "V4dV4fV4fLi", "n")
+BUILTIN(__builtin_sw_vfcvths, "V4fV4dLi", "n")
+
+BUILTIN(__builtin_sw_vfcvtdl, "V4LiV4d", "n")
+BUILTIN(__builtin_sw_vfcvtdl_g, "V4LiV4d", "n")
+BUILTIN(__builtin_sw_vfcvtdl_p, "V4LiV4d", "n")
+BUILTIN(__builtin_sw_vfcvtdl_z, "V4LiV4d", "n")
+BUILTIN(__builtin_sw_vfcvtdl_n, "V4LiV4d", "n")
+
+BUILTIN(__builtin_sw_vfris, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vfris_g, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vfris_p, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vfris_z, "V4fV4f", "n")
+BUILTIN(__builtin_sw_vfris_n, "V4fV4f", "n")
+
+BUILTIN(__builtin_sw_vfrid,  "V4dV4d", "n")
+BUILTIN(__builtin_sw_vfrid_g, "V4dV4d", "n")
+BUILTIN(__builtin_sw_vfrid_p, "V4dV4d", "n")
+BUILTIN(__builtin_sw_vfrid_z, "V4dV4d", "n")
+BUILTIN(__builtin_sw_vfrid_n, "V4dV4d", "n")
+
+BUILTIN(__builtin_sw_vmaxs,  "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vmaxd,  "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vmins,  "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vmind,  "V4dV4dV4d", "n")
+
+BUILTIN(__builtin_sw_vcpyss,   "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vcpyses,  "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vcpysns,  "V4fV4fV4f", "n")
+
+BUILTIN(__builtin_sw_vcpysd,   "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vcpysed,  "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vcpysnd,  "V4dV4dV4d", "n")
+
+BUILTIN(__builtin_sw_vfseleqs,  "V4fV4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vfsellts,  "V4fV4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vfselles,  "V4fV4fV4fV4f", "n")
+
+BUILTIN(__builtin_sw_vfseleqd,  "V4dV4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vfselltd,  "V4dV4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vfselled,  "V4dV4dV4dV4d", "n")
+
+BUILTIN(__builtin_sw_vmas,   "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vmss,   "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vnmas,  "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vnmss,  "V4fV4fV4f", "n")
+BUILTIN(__builtin_sw_vmad,   "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vmsd,   "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vnmad,  "V4dV4dV4d", "n")
+BUILTIN(__builtin_sw_vnmsd,  "V4dV4dV4d", "n")
+
+BUILTIN(__builtin_sw_vinsb,  "V32cLiV32cLi", "n")
+BUILTIN(__builtin_sw_vinsh,  "V16sLiV16sLi", "n")
+BUILTIN(__builtin_sw_vinsw,  "V8iLiV8iLi", "n")
+BUILTIN(__builtin_sw_vinsl,  "V4LiLiV4LiLi", "n")
+BUILTIN(__builtin_sw_vinsfs, "V4ffV4fLi", "n")
+BUILTIN(__builtin_sw_vinsfd, "V4ddV4dLi", "n")
+
+BUILTIN(__builtin_sw_vextw,  "LiV8iLi", "n")
+BUILTIN(__builtin_sw_vextl,  "LiV4LiLi", "n")
+BUILTIN(__builtin_sw_vextfs,  "fV4fLi", "n")
+BUILTIN(__builtin_sw_vextfd,  "dV4dLi", "n")
+
+BUILTIN(__builtin_sw_vshfw,  "V8iV8iV8iLi", "n")
+BUILTIN(__builtin_sw_vshfq,  "V8iV8iV8iLi", "n")
+BUILTIN(__builtin_sw_vshfqb,  "V32cV32cV32c", "n")
+
+BUILTIN(__builtin_sw_vconw,  "V8iV8iV8iv*", "n")
+BUILTIN(__builtin_sw_vconl,  "V4LiV4LiV4Liv*", "n")
+BUILTIN(__builtin_sw_vcons,  "V4fV4fV4fv*", "n")
+BUILTIN(__builtin_sw_vcond,  "V4dV4dV4dv*", "n")
+
+BUILTIN(__builtin_sw_vlogzz,  "V4LiV4LiV4LiV4LiLi", "n")
+BUILTIN(__builtin_sw_vload,     "v.", "t")
+BUILTIN(__builtin_sw_vloadu,    "v.", "t")
+BUILTIN(__builtin_sw_vload_u,   "v.", "t")
+BUILTIN(__builtin_sw_vloade,    "v.", "t")
+BUILTIN(__builtin_sw_vloadnc,   "v.", "t")
+BUILTIN(__builtin_sw_vstore,    "v.", "t")
+BUILTIN(__builtin_sw_vstoreu,   "v.", "t")
+BUILTIN(__builtin_sw_vstore_u,  "v.", "t")
+BUILTIN(__builtin_sw_vstoreuh,  "v.", "t")
+BUILTIN(__builtin_sw_vstoreul,  "v.", "t")
+BUILTIN(__builtin_sw_vstorenc,  "v.", "t")
+
+#undef BUILTIN

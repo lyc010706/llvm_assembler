@@ -1,0 +1,28 @@
+//===- Sw64TargetParser.def - Sw64 target parsing defines ---------*- C++ -*-===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+//
+// This file provides defines to build up the Sw64 target parser's logic.
+//
+//===----------------------------------------------------------------------===//
+
+#ifndef PROC_ALIAS
+#define PROC_ALIAS(NAME, SW64)
+#endif
+
+#undef PROC_ALIAS
+
+#ifndef SW64_CPU
+#define SW64_CPU(ENUM, NAME, FEATURES, DEFAULT_MARCH)
+#endif
+
+SW64_CPU(INVALID, {"invalid"}, FK_INVALID, {""})
+SW64_CPU(SW6B, {"sw6b"}, FK_64BIT, {"core3b"})
+SW64_CPU(SW4D, {"sw4d"}, FK_64BIT, {"core3b"})
+SW64_CPU(SW8A, {"sw8a"}, FK_64BIT, {"core4"})
+
+#undef SW64_CPU

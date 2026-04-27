@@ -1,0 +1,12 @@
+#ifndef LLVM_LIB_TARGET_SW_64_TARGETINFO_SW64TARGETINFO_H
+#define LLVM_LIB_TARGET_SW_64_TARGETINFO_SW64TARGETINFO_H
+
+namespace llvm {
+
+class Target;
+
+Target &getTheSw64Target();
+
+} // namespace llvm
+
+#endif // LLVM_LIB_TARGET_RISCV_TARGETINFO_RISCVTARGETINFO_H
